@@ -1,26 +1,17 @@
 package ar.unq.edu.poo2.Catalogo;
 
 public abstract class ItemCatalogo {
-
 	private String nombre;
 	private String descripcion;
-	private double precioBase;
 	
-	public ItemCatalogo(String n, String d, double pb) {
+	public ItemCatalogo(String n, String d) {
 		this.nombre = n;
 		this.descripcion = d;
-		this.precioBase = pb;
 	}
 	
-	public String getNombre() {
-		return this.nombre;
-	}
+	public String getNombre() { return this.nombre; }
+	public String getDescripcion() { return this.descripcion; }
 	
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-	
-	public double getPrecioBase() {
-		return this.precioBase;
-	}
+	public abstract double getPrecioBase(); 
+	public abstract double precioFinal();
 }
