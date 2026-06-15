@@ -19,6 +19,7 @@ public class Borrador extends EstadoBase {
 
     @Override
     public void confirmar(Pedido pedido) {
+    	// Decrementar stock revisar
         pedido.decrementarStock();
         pedido.setEstado(new Confirmado());
     }
