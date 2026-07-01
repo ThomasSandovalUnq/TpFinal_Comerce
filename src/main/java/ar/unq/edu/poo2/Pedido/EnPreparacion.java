@@ -17,8 +17,6 @@ public class EnPreparacion extends EstadoBase {
         // Cancelar desde EN_PREPARACION (versión nueva del enunciado):
         // repone stock + reembolsa producto Y envío (nota de crédito total).
     	EstadoPedido estadoViejo = this;
-        pedido.reembolsarTotal();
-        pedido.incrementarStock();
         pedido.setEstado(new Cancelado());
         pedido.notificarObservers(estadoViejo, pedido.getEstado());
     }

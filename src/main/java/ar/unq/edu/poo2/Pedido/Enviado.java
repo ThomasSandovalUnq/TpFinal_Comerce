@@ -18,7 +18,6 @@ public class Enviado extends EstadoBase {
     	 // Cancelar desde ENVIADO: reembolso parcial (solo producto, sin envío).
         // CONSULTAR (2): ¿Se repone stock al cancelar desde ENVIADO?
     	EstadoPedido estadoViejo = this;
-        pedido.reembolsarParcial();
         pedido.setEstado(new Cancelado());
         pedido.notificarObservers(estadoViejo, pedido.getEstado());
     }

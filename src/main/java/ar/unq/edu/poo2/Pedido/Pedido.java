@@ -84,12 +84,6 @@ public class Pedido {
 
     public LocalDate getFechaEntrega() { return this.fechaEntrega; }
 
-    // --- Acciones con efecto colateral (stubs - tercera vía) ---
-    public void decrementarStock() { /* TODO: delegar a Sucursal */ }
-    public void incrementarStock() { /* TODO: delegar a Sucursal */ }
-    public void reembolsarTotal()  { /* TODO: generar NotaCredito */ }
-    public void reembolsarParcial(){ /* TODO: reembolso solo producto */ }
-    
     // metodo de aviso a los observers para las notificaciones
     public void notificarObservers(EstadoPedido estadoViejo, EstadoPedido estadoNuevo) {
     	observersNotis.forEach(o -> o.notificar(estadoViejo, estadoNuevo, this));;

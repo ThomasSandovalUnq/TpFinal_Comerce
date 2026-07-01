@@ -156,12 +156,4 @@ public class PedidoVentaTestCase {
         pedido.quitarObserver(obsMock);
         // Sólo validamos que no explote
     }
-
-    @Test
-    public void testEfectosColateralesNoTiranExcepciones() {
-        pedido.decrementarStock();
-        pedido.incrementarStock();
-        pedido.reembolsarTotal();
-        pedido.reembolsarParcial();
-    }
 }
