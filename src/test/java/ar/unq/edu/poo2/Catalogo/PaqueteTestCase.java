@@ -2,6 +2,8 @@ package ar.unq.edu.poo2.Catalogo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,8 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
+import ar.unq.edu.poo2.Reporte.ReporteVisitor;
 
+@ExtendWith(MockitoExtension.class)
 public class PaqueteTestCase {
 
 	    private Paquete packAudioMovil;
@@ -73,5 +76,21 @@ public class PaqueteTestCase {
 	        packAudioMovil.reiniciarVentas();
 	        assertEquals(0, packAudioMovil.getUnidadesVendidas());
 	        assertEquals(0.0, packAudioMovil.getPrecioPromedio());
+	    }
+	    
+	    @Test
+	    public void testGetPesoSumaElPesoDeSusItems() {
+	        when(auricularesMock.getPeso()).thenReturn(0.5f);
+	        when(fundaMock.getPeso()).thenReturn(0.2f);
+	        when(cableMock.getPeso()).thenReturn(0.1f);
+	        
+	        assertEquals(0.8f, packAudioMovil.getPeso(), 0.001f);
+	    }
+	    
+	    @Test
+	    public void testAceptarVisitor() {
+	        ReporteVisitor visitorMock = mock(ReporteVisitor.class);
+	        packAudioMovil.aceptar(visitorMock);
+	        verify(visitorMock).visitar(packAudioMovil);
 	    }
 }

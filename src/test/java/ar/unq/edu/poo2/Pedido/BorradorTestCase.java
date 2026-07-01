@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,11 +14,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import ar.unq.edu.poo2.Catalogo.ItemCatalogo;
+import ar.unq.edu.poo2.MetodoPago.MetodoPago;
 
 @ExtendWith(MockitoExtension.class)
 public class BorradorTestCase {
 
     private Pedido pedido;
+    private MetodoPago pagoMock;
 
     @Mock
     private ItemCatalogo itemMock;
@@ -25,6 +29,13 @@ public class BorradorTestCase {
     public void setUp() {
         // Un pedido nuevo arranca en Borrador, así que no hace falta llevarlo a ningún lado.
         pedido = new Pedido();
+        pagoMock = mock(MetodoPago.class);
+        
+        pedido.setMedioDePago(pagoMock);
+        
+        // Agregamos 1 ítem al pedido para que tenga líneas
+        when(itemMock.precioFinal()).thenReturn(500.0);
+        pedido.agregarItemInterno(itemMock); 
     }
 
     // ---------- Estado inicial ----------

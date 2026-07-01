@@ -46,18 +46,8 @@ public class MetodoPagoBilleteraVirtualTestCase {
         verify(api, never()).acreditar(anyDouble());
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    @Test
+    void testGetMonto() {
+        assertEquals(1500.0, billetera.getMonto());
+    }
 }

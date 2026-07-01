@@ -39,4 +39,14 @@ public class Paquete extends ItemCatalogo {
 	    visitor.visitar(this);
 	}
 	
+	@Override
+    public float getPeso() {
+        // El peso de un paquete es la suma recursiva del peso de sus ítems
+        float pesoTotal = 0;
+        for (ItemCatalogo item : this.pack) {
+            pesoTotal += item.getPeso();
+        }
+        return pesoTotal;
+    }
+	
 }

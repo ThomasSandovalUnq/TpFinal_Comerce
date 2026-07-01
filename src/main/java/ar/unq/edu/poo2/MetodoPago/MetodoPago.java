@@ -29,8 +29,8 @@ public abstract class MetodoPago {
 	public void setMonto(double monto) {
 		this.monto = monto;
 	}
-	public double getMonto(double monto) {
-		return monto;
+	public double getMonto() {
+	    return this.monto;
 	}
 	
 }

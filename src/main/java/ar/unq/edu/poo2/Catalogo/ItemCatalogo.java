@@ -44,4 +44,6 @@ public abstract class ItemCatalogo {
 	    this.unidadesVendidas = 0;
 	    this.sumaPreciosCobrados = 0.0;
 	}
+
+	public abstract float getPeso();
 }

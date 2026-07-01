@@ -63,6 +63,19 @@ public class Producto extends ItemCatalogo {
 	public void aceptar(ReporteVisitor visitor) {
 	    visitor.visitar(this);
 	}
+
+	public float getPeso() {
+	    // Buscamos si este producto en particular tiene el atributo dinámico "Peso"
+	    Object pesoObj = this.atributosDinamicos.get("Peso");
+	    
+	    if (pesoObj != null && pesoObj instanceof Number) {
+	        // Si lo tiene y es un número, devolvemos su valor en float
+	        return ((Number) pesoObj).floatValue();
+	    }
+	    
+	    // Si no tiene el atributo "Peso" (por ejemplo, es un software), pesa 0.
+	    return 0.0f; 
+	}
 	
 	
 }

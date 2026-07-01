@@ -16,14 +16,17 @@ public class Borrador extends EstadoBase {
     public void quitarItem(Pedido pedido, ItemCatalogo item) {
         pedido.quitarItemInterno(item);
     }
-
+    
     @Override
     public void confirmar(Pedido pedido) {
         pedido.capturarPrecios();
-        pedido.decrementarStock();
-         EstadoPedido estadoViejo = this;
-        pedido.setEstado(new Confirmado());
-        pedido.notificarObservers(estadoViejo, pedido.getEstado());
+        pedido.procesarPago(); // Si falla el pago, revienta aquí
+        
+        EstadoPedido estadoViejo = pedido.getEstado();
+        EstadoPedido nuevoEstado = new Confirmado();
+        
+        pedido.setEstado(nuevoEstado);
+        pedido.notificarObservers(estadoViejo, nuevoEstado);
     }
 
     @Override

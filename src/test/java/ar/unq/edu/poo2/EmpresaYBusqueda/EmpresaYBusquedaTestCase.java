@@ -40,8 +40,6 @@ public class EmpresaYBusquedaTestCase {
         buscador = new BuscadorCatalogo();
     }
 
-    // --- TESTS DE CRITERIOS SIMPLES ---
-
     @Test
     public void testCriterioNombreSatisfaceIgnorandoMayusculas() {
         when(tecladoMock.getNombre()).thenReturn("Teclado Mecanico Logitech");
@@ -76,7 +74,6 @@ public class EmpresaYBusquedaTestCase {
 
     @Test
     public void testCriterioCategoriaFallaSiEsUnPaquete() {
-        // Los paquetes no tienen categoría, por lo que el criterio debería dar false
         CriterioBusqueda criterio = new CriterioCategoria("perifericos");
         assertFalse(criterio.satisface(paqueteMock));
     }
@@ -87,14 +84,11 @@ public class EmpresaYBusquedaTestCase {
         List<Sucursal> sucursales = Arrays.asList(sucursalQuilmesMock, sucursalBernalMock);
         CriterioBusqueda criterio = new CriterioDisponibilidad(sucursales);
 
-        // Simulamos que Quilmes no tiene, pero Bernal sí tiene
         when(sucursalQuilmesMock.tieneStockLocal(tecladoMock, 1)).thenReturn(false);
         when(sucursalBernalMock.tieneStockLocal(tecladoMock, 1)).thenReturn(true);
 
         assertTrue(criterio.satisface(tecladoMock));
     }
-
-    // --- TESTS DE CRITERIOS COMPLEJOS (LOGICA LIGADA) ---
 
     @Test
     public void testCriterioAndRequiereQueAmbosSeCumplan() {
@@ -132,8 +126,6 @@ public class EmpresaYBusquedaTestCase {
         assertTrue(noEsTeclado.satisface(mouseMock));
     }
 
-    // --- TEST DEL BUSCADOR (EL MOTOR) ---
-
     @Test
     public void testBuscadorFiltraCorrectamenteUnaListaDeItems() {
         when(tecladoMock.getPrecioBase()).thenReturn(5000.0);
@@ -142,12 +134,10 @@ public class EmpresaYBusquedaTestCase {
 
         List<ItemCatalogo> catalogoCompleto = Arrays.asList(tecladoMock, mouseMock, paqueteMock);
         
-        // Queremos buscar todo lo que cueste 5000 o menos
         CriterioBusqueda criterioBarato = new CriterioPrecioMaximo(5000.0);
 
         List<ItemCatalogo> resultados = buscador.buscar(catalogoCompleto, criterioBarato);
 
-        // Debería traer solo el teclado y el mouse, dejando afuera al paquete
         assertEquals(2, resultados.size());
         assertTrue(resultados.contains(tecladoMock));
         assertTrue(resultados.contains(mouseMock));
@@ -167,7 +157,6 @@ public class EmpresaYBusquedaTestCase {
     public void testCriterioAndFallaRapidoSiElPrimeroEsFalso() {
         when(mouseMock.getNombre()).thenReturn("Mouse"); 
         
-        // El nombre no coincide, así que falla en la primera condición y no evalúa el precio
         CriterioBusqueda and = new CriterioAnd(new CriterioNombre("teclado"), new CriterioPrecioMaximo(2000.0));
         assertFalse(and.satisface(mouseMock), "Debe dar false y hacer cortocircuito en la primera condición.");
     }
@@ -184,8 +173,6 @@ public class EmpresaYBusquedaTestCase {
     @Test
     public void testCriterioOrPasaRapidoSiElPrimeroEsVerdadero() {
         when(tecladoMock.getNombre()).thenReturn("Teclado");
-        
-        // Pasa en la primera condición, así que no evalúa el precio
         CriterioBusqueda or = new CriterioOr(new CriterioNombre("teclado"), new CriterioPrecioMaximo(2000.0));
         assertTrue(or.satisface(tecladoMock), "Debe dar true y hacer cortocircuito al cumplir la primera.");
     }
